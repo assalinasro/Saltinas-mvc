@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "¡Bienvenida!";
+}
+
+<section class="seccion">
+    <div class="container">
+        <div class="gracias-card text-center">
+            <p class="gracias-icono">💗</p>
+            <h2 class="titulo-seccion">¡Gracias por registrarte, @ViewBag.Nombre!</h2>
+            <p class="lead-saltinas">
+                Ya eres parte de la comunidad Saltinas (clienta #@ViewBag.Numero). Pronto recibirás nuestras promociones.
+            </p>
+            <a class="btn btn-hero" asp-controller="Catalogo" asp-action="Index">Ir al catálogo 🛍️</a>
+        </div>
+    </div>
+</section>

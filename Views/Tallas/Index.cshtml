@@ -1,0 +1,105 @@
+@model TallaViewModel
+@{
+    ViewData["Title"] = "Guía de tallas";
+}
+
+<section class="seccion">
+    <div class="container">
+        <h2 class="titulo-seccion">Guía de Tallas 📏</h2>
+        <p class="lead-saltinas">Usa tu estatura y el contorno de tu cintura para encontrar tu talla ideal.</p>
+
+        <!-- Calculadora (GET muestra el formulario, POST calcula en C#) -->
+        <div class="row g-4 mb-5">
+            <div class="col-lg-6">
+                <div class="tarjeta-info h-100">
+                    <h3 class="tarjeta-info-titulo">Calcula tu talla ✨</h3>
+
+                    <form asp-controller="Tallas" asp-action="Index" method="post" class="row g-3">
+                        <div class="col-6">
+                            <label asp-for="Estatura" class="form-label"></label>
+                            <input asp-for="Estatura" class="form-control" placeholder="Ej: 165" inputmode="numeric" />
+                            <span asp-validation-for="Estatura" class="text-danger small"></span>
+                        </div>
+                        <div class="col-6">
+                            <label asp-for="Cintura" class="form-label"></label>
+                            <input asp-for="Cintura" class="form-control" placeholder="Ej: 70" inputmode="numeric" />
+                            <span asp-validation-for="Cintura" class="text-danger small"></span>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-registrar">Calcular mi talla</button>
+                        </div>
+                    </form>
+
+                    @if (Model.Resultado is not null)
+                    {
+                        <div class="resultado-talla mt-4">
+                            <p class="resultado-titulo">Tu talla recomendada</p>
+                            <div class="resultado-chips">
+                                <span class="chip-talla">Jean <strong>@Model.Resultado.TallaJean</strong></span>
+                                <span class="chip-talla">Top <strong>@Model.Resultado.TallaTop</strong></span>
+                            </div>
+                            <p class="mb-2">@Model.Resultado.Mensaje</p>
+                            @if (Model.Resultado.FueraDeRango)
+                            {
+                                <a href="https://wa.me/573054385835" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-tabla btn-sm">💬 Escríbenos</a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="tarjeta-info h-100">
+                    <h3 class="tarjeta-info-titulo">Tutorial: Cómo tomar tus medidas 🎬</h3>
+                    <p>Mira este video para aprender a medir bien tu estatura y tu cintura antes de elegir tu talla.</p>
+                    <div class="video-wrapper">
+                        <video controls class="video-medidas">
+                            <source src="@Url.Content("~/Videos/tomar-medidas.mp4")" type="video/mp4" />
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de referencia -->
+        <div class="table-responsive tabla-saltinas">
+            <table class="table table-bordered align-middle text-center mb-0">
+                <caption>Guía de tallas según estatura y medidas corporales</caption>
+                <thead>
+                    <tr>
+                        <th>Estatura (cm)</th>
+                        <th>Cintura (cm)</th>
+                        <th>Talla Jean</th>
+                        <th>Talla Top</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Tabla.Count; i++)
+                    {
+                        var fila = Model.Tabla[i];
+                        bool resaltada = Model.Resultado is not null && Model.Resultado.IndiceFila == i;
+                        <tr class="@(resaltada ? "fila-resaltada" : "")">
+                            <td>@fila.EstaturaMin - @fila.EstaturaMax</td>
+                            <td>@fila.CinturaMin - @fila.CinturaMax</td>
+                            <td>@fila.TallaJean</td>
+                            <td>@fila.TallaTop</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">¿Tu medida está entre dos tallas? Elige siempre la más grande</td>
+                        <td>
+                            <a href="https://wa.me/573054385835" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-tabla btn-sm">💬 Escríbenos</a>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

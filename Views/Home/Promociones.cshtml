@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Promociones";
+}
+
+<section class="seccion">
+    <div class="container">
+        <h2 class="titulo-seccion">Promociones</h2>
+        <p class="lead-saltinas">
+            Cada mes tenemos descuentos especiales y pasarelas de moda para mostrarte
+            las nuevas colecciones.
+        </p>
+
+        <div class="row g-4 mt-1">
+            <div class="col-md-6">
+                <div class="tarjeta-info">
+                    <p class="tarjeta-info-icono">🎥</p>
+                    <h3 class="tarjeta-info-titulo">Pasarela del mes</h3>
+                    <p>Mira nuestro nuevo video de outfits para conciertos en YouTube.</p>
+                    <a class="video-enlace" href="https://www.youtube.com/watch?v=mZfy9iDjyfI" target="_blank" rel="noopener noreferrer">
+                        Ver video en YouTube
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="tarjeta-info">
+                    <p class="tarjeta-info-icono">💌</p>
+                    <h3 class="tarjeta-info-titulo">Descuentos exclusivos</h3>
+                    <p>Regístrate en nuestra comunidad y recibe las promociones antes que nadie.</p>
+                    <a class="video-enlace" asp-controller="Registro" asp-action="Index">Crear mi cuenta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,99 @@
+@model HomeViewModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<!-- HERO -->
+<header class="hero">
+    <span class="destello d1">✦</span>
+    <span class="destello d2">✧</span>
+    <span class="destello d3">✦</span>
+    <span class="destello d4">✧</span>
+
+    <div class="container text-center hero-contenido">
+        <span class="hero-chip">✦ Moda inspirada en los años 2000 ✦</span>
+        <h1 class="hero-titulo">Saltinas</h1>
+        <p class="hero-sub">Moda con mucha actitud</p>
+
+        <div class="hero-botones">
+            <a class="btn btn-hero" asp-controller="Catalogo" asp-action="Index">Ver catálogo 🛍️</a>
+            <a class="btn btn-hero-outline" asp-controller="Registro" asp-action="Index">Únete a la comunidad 💗</a>
+        </div>
+
+        <audio controls preload="none" class="hero-audio">
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+            Tu navegador no soporta el elemento de audio.
+        </audio>
+    </div>
+</header>
+
+<!-- BIENVENIDA + MISIÓN -->
+<section class="seccion">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-md-7">
+                <h2 class="titulo-seccion">Bienvenida a Saltinas</h2>
+                <p class="texto-bienvenida">
+                    Saltinas es una tienda de ropa femenina inspirada en la moda de los años 2000, la autenticidad
+                    y la feminidad. Aquí encontrarás prendas nacionales e importadas para que por fin encuentres
+                    tu estilo favorito.
+                </p>
+            </div>
+            <div class="col-md-5">
+                <div class="mision-box">
+                    <p class="mision-titulo">✦ Nuestra misión</p>
+                    <p class="mision-texto">
+                        Que cada chica se sienta como una princesa de los 2000: brillante, segura y llena de estilo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CATEGORÍAS -->
+<section class="seccion seccion-alt">
+    <div class="container">
+        <h2 class="titulo-seccion">Compra por categoría</h2>
+        <div class="row row-cols-2 row-cols-md-3 g-3">
+            @foreach (var categoria in Model.Categorias)
+            {
+                <div class="col">
+                    <a class="categoria-tile" asp-controller="Catalogo" asp-action="Index" asp-route-categoria="@categoria.Nombre">
+                        <span class="categoria-icono">@categoria.Icono</span>
+                        <span class="categoria-nombre">@categoria.Nombre</span>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- DESTACADAS -->
+<section class="seccion">
+    <div class="container">
+        <h2 class="titulo-seccion">Prendas destacadas</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+            @foreach (var producto in Model.Destacados)
+            {
+                <partial name="_ProductoCard" model="producto" />
+            }
+        </div>
+        <div class="text-center mt-4">
+            <a class="btn btn-hero" asp-controller="Catalogo" asp-action="Index">Ver todo el catálogo</a>
+        </div>
+    </div>
+</section>
+
+<!-- BANNER PROMOCIONES -->
+<section class="seccion pt-0">
+    <div class="container">
+        <div class="banner-promo">
+            <div>
+                <p class="banner-titulo">Descuentos y pasarelas cada mes ✨</p>
+                <p class="mb-0">Mira nuestras promociones y las nuevas colecciones.</p>
+            </div>
+            <a class="btn btn-banner" asp-controller="Home" asp-action="Promociones">Ver promociones</a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,91 @@
+@model RegistroViewModel
+@{
+    ViewData["Title"] = "Regístrate";
+}
+
+<section class="seccion">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <h2 class="titulo-seccion">Regístrate y haz parte de nuestra comunidad 📝</h2>
+                <p class="lead-saltinas">Llena el siguiente formulario para crear tu cuenta y recibir promociones exclusivas.</p>
+
+                <div class="tarjeta-info">
+                    <form asp-controller="Registro" asp-action="Index" method="post" class="row g-3">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger col-12"></div>
+
+                        <div class="col-md-6">
+                            <label asp-for="NombreCompleto" class="form-label"></label>
+                            <input asp-for="NombreCompleto" class="form-control" placeholder="Escribe tu nombre" />
+                            <span asp-validation-for="NombreCompleto" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Correo" class="form-label"></label>
+                            <input asp-for="Correo" type="email" class="form-control" placeholder="ejemplo@correo.com" />
+                            <span asp-validation-for="Correo" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Telefono" class="form-label"></label>
+                            <input asp-for="Telefono" type="tel" class="form-control" placeholder="Ej: 3001234567" />
+                            <span asp-validation-for="Telefono" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="FechaNacimiento" class="form-label"></label>
+                            <input asp-for="FechaNacimiento" type="date" class="form-control" />
+                            <span asp-validation-for="FechaNacimiento" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Clave" class="form-label"></label>
+                            <input asp-for="Clave" class="form-control" placeholder="Crea una contraseña" autocomplete="new-password" />
+                            <span asp-validation-for="Clave" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="ConfirmarClave" class="form-label"></label>
+                            <input asp-for="ConfirmarClave" class="form-control" placeholder="Repite tu contraseña" autocomplete="new-password" />
+                            <span asp-validation-for="ConfirmarClave" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label d-block">Género</label>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="femenino" name="Genero" value="femenino" checked="@(Model.Genero == "femenino")" />
+                                <label class="form-check-label" for="femenino">Femenino</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="masculino" name="Genero" value="masculino" checked="@(Model.Genero == "masculino")" />
+                                <label class="form-check-label" for="masculino">Masculino</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="otro" name="Genero" value="otro" checked="@(Model.Genero == "otro")" />
+                                <label class="form-check-label" for="otro">Otro</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input asp-for="AceptaTerminos" class="form-check-input" />
+                                <label asp-for="AceptaTerminos" class="form-check-label"></label>
+                            </div>
+                            <span asp-validation-for="AceptaTerminos" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-registrar">Registrarme 💗</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

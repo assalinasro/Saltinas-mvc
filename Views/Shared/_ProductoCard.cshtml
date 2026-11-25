@@ -1,0 +1,22 @@
+@model Producto
+
+<div class="col">
+    <article class="tarjeta-producto">
+        <div class="foto-wrap">
+            <img src="@Url.Content("~/" + Model.Imagen)" alt="@Model.Nombre" class="foto-producto" loading="lazy"
+                 onerror="this.onerror=null;this.src='@Url.Content("~/img/placeholder.svg")';" />
+            <span class="etiqueta-categoria">@Model.Categoria</span>
+        </div>
+        <div class="cuerpo-producto">
+            <h3 class="nombre-producto">@Model.Nombre</h3>
+            <p class="precio-producto">@Model.PrecioFormateado</p>
+            <button type="button" class="btn btn-agregar"
+                    data-id="@Model.Id"
+                    data-nombre="@Model.Nombre"
+                    data-precio="@Model.Precio"
+                    data-imagen="@Url.Content("~/" + Model.Imagen)">
+                Agregar al carrito 🛒
+            </button>
+        </div>
+    </article>
+</div>

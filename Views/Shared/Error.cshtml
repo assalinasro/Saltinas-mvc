@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Ups";
+    int codigo = ViewBag.Codigo ?? 500;
+    string mensaje = codigo == 404
+        ? "No encontramos la página que buscas."
+        : "Algo salió mal de nuestro lado. Intenta de nuevo en un momento.";
+}
+
+<section class="seccion">
+    <div class="container text-center">
+        <p class="error-codigo">@codigo</p>
+        <h1 class="titulo-seccion">Ups, esto no era el outfit 💔</h1>
+        <p class="mb-4">@mensaje</p>
+        <a class="btn btn-hero" asp-controller="Home" asp-action="Index">Volver al inicio</a>
+    </div>
+</section>

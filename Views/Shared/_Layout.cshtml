@@ -1,0 +1,112 @@
+@{
+    var controlador = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var accion = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+
+    string Activo(string c, string a) => controlador == c && accion == a ? "active" : "";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Saltinas</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-saltinas sticky-top">
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">✦ Saltinas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+                    aria-controls="navMenu" aria-expanded="false" aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-3">
+                    <li class="nav-item"><a class="nav-link @Activo("Home", "Index")" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link @Activo("Catalogo", "Index")" asp-controller="Catalogo" asp-action="Index">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link @Activo("Home", "Promociones")" asp-controller="Home" asp-action="Promociones">Promociones</a></li>
+                    <li class="nav-item"><a class="nav-link @Activo("Tallas", "Index")" asp-controller="Tallas" asp-action="Index">Guía de Tallas</a></li>
+                    <li class="nav-item"><a class="nav-link @Activo("Registro", "Index")" asp-controller="Registro" asp-action="Index">Regístrate</a></li>
+                </ul>
+
+                <button class="btn btn-carrito position-relative" type="button" data-bs-toggle="modal" data-bs-target="#carritoModal">
+                    🛍️ Carrito
+                    <span id="contador-carrito" class="badge badge-carrito rounded-pill position-absolute top-0 start-100 translate-middle d-none">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- Carrito (modal de Bootstrap) -->
+    <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true"
+         data-url-catalogo="@Url.Action("Index", "Catalogo")" data-whatsapp="573054385835">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content modal-saltinas">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="carritoModalLabel">Tu carrito 🛍️</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body" id="lista-carrito"></div>
+                <div class="modal-footer flex-column align-items-stretch">
+                    <div class="d-flex justify-content-between w-100 mb-2">
+                        <span class="fw-bold">Total:</span>
+                        <span class="fw-bold total-carrito" id="total-carrito">$0</span>
+                    </div>
+                    <button type="button" class="btn btn-pagar w-100" id="btn-pagar" disabled>
+                        💬 Pagar por WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aviso al agregar una prenda -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast-carrito" class="toast toast-saltinas" role="status" aria-live="polite" aria-atomic="true">
+            <div class="toast-body" id="toast-texto">Prenda agregada 💗</div>
+        </div>
+    </div>
+
+    <footer class="footer-saltinas">
+        <div class="container">
+            <p class="footer-marca">✦ Saltinas ✦</p>
+            <p>Síguenos en nuestras redes sociales:</p>
+            <p>
+                <a href="https://www.tiktok.com/@@anasalinasro" target="_blank" rel="noopener noreferrer">TikTok</a>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+            </p>
+
+            <div class="botones-contacto">
+                <a href="https://www.instagram.com/anasalinasro/" target="_blank" rel="noopener noreferrer" class="btn-contacto btn-instagram">
+                    📷 Síguenos en Instagram
+                </a>
+                <a href="https://wa.me/573054385835" target="_blank" rel="noopener noreferrer" class="btn-contacto btn-whatsapp">
+                    💬 Escríbenos por WhatsApp
+                </a>
+            </div>
+
+            <p>Escríbenos: <a href="mailto:assalinasro@gmail.com">assalinasro@gmail.com</a></p>
+            <p class="mb-0">&copy; @DateTime.Now.Year Saltinas - Programación web 💖</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle (incluye Popper, necesario para el modal) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

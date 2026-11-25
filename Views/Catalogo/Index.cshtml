@@ -1,0 +1,39 @@
+@model CatalogoViewModel
+@{
+    ViewData["Title"] = "Catálogo";
+    bool todas = Model.CategoriaActiva.Equals("todas", StringComparison.OrdinalIgnoreCase);
+}
+
+<section class="seccion">
+    <div class="container">
+        <h2 class="titulo-seccion">Catálogo</h2>
+
+        <h3 class="subtitulo-seccion">Categorías de ropa</h3>
+        <div class="d-flex flex-wrap gap-2 mb-4" id="filtros-categoria">
+            <a class="btn btn-filtro @(todas ? "activo" : "")" asp-action="Index" asp-route-categoria="todas">Todas</a>
+            @foreach (var categoria in Model.Categorias)
+            {
+                bool activa = categoria.Nombre.Equals(Model.CategoriaActiva, StringComparison.OrdinalIgnoreCase);
+                <a class="btn btn-filtro @(activa ? "activo" : "")" asp-action="Index" asp-route-categoria="@categoria.Nombre">
+                    @categoria.Icono @categoria.Nombre
+                </a>
+            }
+        </div>
+
+        <h3 class="subtitulo-seccion" id="grid-titulo">Prendas destacadas</h3>
+
+        @if (Model.Productos.Count == 0)
+        {
+            <p class="text-center text-muted">No hay prendas en esta categoría por ahora.</p>
+        }
+        else
+        {
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="grid-productos">
+                @foreach (var producto in Model.Productos)
+                {
+                    <partial name="_ProductoCard" model="producto" />
+                }
+            </div>
+        }
+    </div>
+</section>
