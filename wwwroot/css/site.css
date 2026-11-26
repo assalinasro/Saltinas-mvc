@@ -890,3 +890,124 @@ a:hover {
         display: none;
     }
 }
+
+/* =========================================================
+   Administración (CRUD de productos y categorías)
+   ========================================================= */
+
+.alert-saltinas {
+    background-color: #d9f7e3;
+    color: #1a7a44;
+    border: none;
+    border-radius: 16px;
+    font-weight: 600;
+}
+
+.alert-saltinas-error {
+    background-color: #ffe0e0;
+    color: #b0223f;
+    border: none;
+    border-radius: 16px;
+    font-weight: 600;
+}
+
+.dropdown-menu-saltinas {
+    background-color: var(--negro-2000);
+    border: 1px solid var(--rosa-fuerte);
+    border-radius: 16px;
+    padding: 0.4rem;
+}
+
+.dropdown-menu-saltinas .dropdown-item {
+    color: var(--rosa-suave);
+    font-weight: 600;
+    border-radius: 12px;
+}
+
+.dropdown-menu-saltinas .dropdown-item:hover,
+.dropdown-menu-saltinas .dropdown-item:focus {
+    background-color: rgba(255, 61, 138, 0.28);
+    color: #fff;
+}
+
+.form-select {
+    border: 2px solid var(--rosa-suave);
+    border-radius: 14px;
+    padding: 0.6rem 0.9rem;
+    color: var(--negro-2000);
+}
+
+.form-select:focus {
+    border-color: var(--rosa-fuerte);
+    box-shadow: 0 0 0 0.25rem rgba(255, 61, 138, 0.18);
+}
+
+.mini-foto-tabla {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 12px;
+    background-color: var(--rosa-suave);
+}
+
+.pildora-categoria {
+    display: inline-block;
+    background-color: var(--rosa-suave);
+    color: var(--negro-2000);
+    border-radius: 30px;
+    padding: 0.15rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.acciones-tabla {
+    white-space: nowrap;
+}
+
+.btn-accion {
+    background-color: #fff;
+    color: var(--negro-2000);
+    border: 2px solid var(--rosa-suave);
+    border-radius: 30px;
+    font-weight: 600;
+}
+
+.btn-accion:hover {
+    background-color: var(--lavanda);
+    border-color: var(--lavanda);
+    color: #fff;
+}
+
+.btn-accion-peligro:hover {
+    background-color: #d6336c;
+    border-color: #d6336c;
+}
+
+.btn-eliminar {
+    background-color: #d6336c;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 0.55rem 1.6rem;
+    font-weight: 700;
+}
+
+.btn-eliminar:hover {
+    background-color: #b0223f;
+    color: #fff;
+}
+
+.detalle-lista dt {
+    color: var(--lavanda);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detalle-lista dd {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}

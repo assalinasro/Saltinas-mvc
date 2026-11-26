@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using SaltinasMvc.Data;
 using SaltinasMvc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,10 +14,13 @@ if (!string.IsNullOrEmpty(puerto))
 // MVC: controladores + vistas Razor
 builder.Services.AddControllersWithViews();
 
-// Servicios propios (inyección de dependencias). Singleton = una sola instancia en memoria.
-builder.Services.AddSingleton<CatalogoService>();
-builder.Services.AddSingleton<ClienteService>();
-builder.Services.AddSingleton<TallaService>();
+// Entity Framework Core: el DbContext se conecta a SQL Server con la cadena "SaltinasDb" (appsettings.json)
+builder.Services.AddDbContext<SaltinasDbContext>(opciones =>
+    opciones.UseSqlServer(builder.Configuration.GetConnectionString("SaltinasDb")));
+
+// Servicios propios (inyección de dependencias)
+builder.Services.AddScoped<ClienteService>();     // Scoped: usa el DbContext, que vive una solicitud
+builder.Services.AddSingleton<TallaService>();    // Singleton: no depende de la base de datos
 
 var app = builder.Build();
 

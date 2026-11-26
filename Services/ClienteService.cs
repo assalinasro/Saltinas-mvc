@@ -1,44 +1,45 @@
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
+using SaltinasMvc.Data;
 using SaltinasMvc.Models;
 
 namespace SaltinasMvc.Services;
 
 /// <summary>
-/// Guarda las clientas registradas en memoria y aplica la lógica del registro:
+/// Guarda las clientas registradas en SQL Server (tabla Clientes) y aplica la lógica del registro:
 /// detectar correos repetidos y proteger la contraseña con un hash PBKDF2.
 /// </summary>
 public class ClienteService
 {
-    private readonly List<Cliente> _clientes = new();
-    private readonly object _candado = new();
+    private readonly SaltinasDbContext _db;
 
-    public bool ExisteCorreo(string correo)
+    public ClienteService(SaltinasDbContext db)
     {
-        lock (_candado)
-        {
-            return _clientes.Any(c => c.Correo.Equals(correo, StringComparison.OrdinalIgnoreCase));
-        }
+        _db = db;
     }
 
-    public Cliente Registrar(RegistroViewModel datos)
+    public Task<bool> ExisteCorreoAsync(string correo)
     {
-        lock (_candado)
-        {
-            var cliente = new Cliente
-            {
-                Id = _clientes.Count + 1,
-                NombreCompleto = datos.NombreCompleto.Trim(),
-                Correo = datos.Correo.Trim().ToLowerInvariant(),
-                Telefono = datos.Telefono,
-                ClaveHash = CrearHash(datos.Clave),
-                FechaNacimiento = datos.FechaNacimiento!.Value,
-                Genero = datos.Genero,
-                FechaRegistro = DateTime.UtcNow
-            };
+        var correoNormalizado = correo.Trim().ToLower();
+        return _db.Clientes.AnyAsync(c => c.Correo == correoNormalizado);
+    }
 
-            _clientes.Add(cliente);
-            return cliente;
-        }
+    public async Task<Cliente> RegistrarAsync(RegistroViewModel datos)
+    {
+        var cliente = new Cliente
+        {
+            NombreCompleto = datos.NombreCompleto.Trim(),
+            Correo = datos.Correo.Trim().ToLowerInvariant(),
+            Telefono = datos.Telefono,
+            ClaveHash = CrearHash(datos.Clave),
+            FechaNacimiento = datos.FechaNacimiento!.Value.Date,
+            Genero = datos.Genero,
+            FechaRegistro = DateTime.UtcNow
+        };
+
+        _db.Clientes.Add(cliente);        // INSERT INTO Clientes ...
+        await _db.SaveChangesAsync();
+        return cliente;
     }
 
     private static string CrearHash(string clave)
