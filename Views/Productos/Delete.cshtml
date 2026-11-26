@@ -1,0 +1,25 @@
+@model Producto
+@{
+    ViewData["Title"] = "Eliminar producto";
+}
+
+<section class="seccion">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="tarjeta-info text-center">
+                    <p class="tarjeta-info-icono">🗑️</p>
+                    <h2 class="tarjeta-info-titulo">¿Seguro que quieres eliminar este producto?</h2>
+                    <p class="mb-1 fw-bold">@Model.Nombre</p>
+                    <p class="mb-1">@Model.Categoria?.Icono @Model.Categoria?.Nombre · @Model.PrecioFormateado</p>
+                    <p class="text-muted">Esta acción no se puede deshacer.</p>
+
+                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn btn-eliminar">Sí, eliminar</button>
+                        <a class="btn btn-hero-outline" asp-action="Index">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

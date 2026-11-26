@@ -37,6 +37,14 @@
                     <li class="nav-item"><a class="nav-link @Activo("Home", "Promociones")" asp-controller="Home" asp-action="Promociones">Promociones</a></li>
                     <li class="nav-item"><a class="nav-link @Activo("Tallas", "Index")" asp-controller="Tallas" asp-action="Index">Guía de Tallas</a></li>
                     <li class="nav-item"><a class="nav-link @Activo("Registro", "Index")" asp-controller="Registro" asp-action="Index">Regístrate</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle @(controlador is "Productos" or "Categorias" ? "active" : "")" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">Administrar</a>
+                        <ul class="dropdown-menu dropdown-menu-saltinas">
+                            <li><a class="dropdown-item" asp-controller="Productos" asp-action="Index">👗 Productos</a></li>
+                            <li><a class="dropdown-item" asp-controller="Categorias" asp-action="Index">🏷️ Categorías</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
                 <button class="btn btn-carrito position-relative" type="button" data-bs-toggle="modal" data-bs-target="#carritoModal">
@@ -48,6 +56,25 @@
     </nav>
 
     <main>
+        @if (TempData["Mensaje"] is string mensajeExito)
+        {
+            <div class="container pt-3">
+                <div class="alert alert-saltinas alert-dismissible fade show" role="alert">
+                    ✅ @mensajeExito
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            </div>
+        }
+        @if (TempData["Error"] is string mensajeError)
+        {
+            <div class="container pt-3">
+                <div class="alert alert-saltinas-error alert-dismissible fade show" role="alert">
+                    ⚠️ @mensajeError
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            </div>
+        }
+
         @RenderBody()
     </main>
 

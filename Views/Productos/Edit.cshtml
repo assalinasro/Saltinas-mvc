@@ -1,0 +1,30 @@
+@model Producto
+@{
+    ViewData["Title"] = "Editar producto";
+}
+
+<section class="seccion">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <h2 class="titulo-seccion">Editar producto ✏️</h2>
+
+                <div class="tarjeta-info">
+                    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="row g-3">
+                        <input type="hidden" asp-for="Id" />
+                        <partial name="_CamposProducto" model="Model" />
+
+                        <div class="col-12 d-flex gap-2">
+                            <button type="submit" class="btn btn-registrar">Guardar cambios 💗</button>
+                            <a class="btn btn-hero-outline" asp-action="Index">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

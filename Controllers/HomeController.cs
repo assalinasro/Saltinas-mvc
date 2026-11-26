@@ -1,26 +1,38 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SaltinasMvc.Data;
 using SaltinasMvc.Models;
-using SaltinasMvc.Services;
 
 namespace SaltinasMvc.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly CatalogoService _catalogo;
+    private readonly SaltinasDbContext _db;
 
-    public HomeController(CatalogoService catalogo)
+    public HomeController(SaltinasDbContext db)
     {
-        _catalogo = catalogo;
+        _db = db;
     }
 
     // GET: /
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         var modelo = new HomeViewModel
         {
-            Categorias = _catalogo.ObtenerCategorias(),
-            Destacados = _catalogo.ObtenerDestacados()
+            // SELECT * FROM Categorias ORDER BY Id
+            Categorias = await _db.Categorias
+                .AsNoTracking()
+                .OrderBy(c => c.Id)
+                .ToListAsync(),
+
+            // SELECT ... FROM Productos JOIN Categorias WHERE Destacado = 1
+            Destacados = await _db.Productos
+                .AsNoTracking()
+                .Include(p => p.Categoria)
+                .Where(p => p.Destacado)
+                .OrderBy(p => p.Id)
+                .ToListAsync()
         };
 
         return View(modelo);

@@ -1,0 +1,44 @@
+@model Producto
+@{
+    ViewData["Title"] = Model.Nombre;
+}
+
+<section class="seccion">
+    <div class="container">
+        <h2 class="titulo-seccion">Detalle del producto</h2>
+
+        <div class="tarjeta-info">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-4">
+                    <div class="foto-wrap rounded-4 overflow-hidden">
+                        <img src="@Url.Content("~/" + Model.Imagen)" alt="@Model.Nombre" class="foto-producto"
+                             onerror="this.onerror=null;this.src='@Url.Content("~/img/placeholder.svg")';" />
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <dl class="detalle-lista">
+                        <dt>@Html.DisplayNameFor(m => m.Nombre)</dt>
+                        <dd>@Model.Nombre</dd>
+
+                        <dt>@Html.DisplayNameFor(m => m.CategoriaId)</dt>
+                        <dd>@Model.Categoria?.Icono @Model.Categoria?.Nombre</dd>
+
+                        <dt>@Html.DisplayNameFor(m => m.Precio)</dt>
+                        <dd>@Model.PrecioFormateado</dd>
+
+                        <dt>@Html.DisplayNameFor(m => m.Destacado)</dt>
+                        <dd>@(Model.Destacado ? "Sí ⭐" : "No")</dd>
+
+                        <dt>@Html.DisplayNameFor(m => m.Imagen)</dt>
+                        <dd>@Model.Imagen</dd>
+                    </dl>
+
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-registrar" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+                        <a class="btn btn-hero-outline" asp-action="Index">Volver a la lista</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

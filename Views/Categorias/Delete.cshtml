@@ -1,0 +1,35 @@
+@model Categoria
+@{
+    ViewData["Title"] = "Eliminar categoría";
+}
+
+<section class="seccion">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="tarjeta-info text-center">
+                    <p class="tarjeta-info-icono">🗑️</p>
+                    <h2 class="tarjeta-info-titulo">¿Seguro que quieres eliminar esta categoría?</h2>
+                    <p class="mb-1 fw-bold">@Model.Icono @Model.Nombre</p>
+
+                    @if (Model.Productos.Any())
+                    {
+                        <p class="text-danger fw-semibold">
+                            Tiene @Model.Productos.Count producto(s) asociados, por lo que no se podrá eliminar hasta que
+                            los borres o los pases a otra categoría.
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Esta acción no se puede deshacer.</p>
+                    }
+
+                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn btn-eliminar">Sí, eliminar</button>
+                        <a class="btn btn-hero-outline" asp-action="Index">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

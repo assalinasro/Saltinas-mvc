@@ -1,0 +1,15 @@
+@model Categoria
+
+<div asp-validation-summary="ModelOnly" class="text-danger col-12"></div>
+
+<div class="col-md-8">
+    <label asp-for="Nombre" class="form-label"></label>
+    <input asp-for="Nombre" class="form-control" placeholder="Ej: Vestidos" />
+    <span asp-validation-for="Nombre" class="text-danger small"></span>
+</div>
+
+<div class="col-md-4">
+    <label asp-for="Icono" class="form-label"></label>
+    <input asp-for="Icono" class="form-control" placeholder="👗" />
+    <span asp-validation-for="Icono" class="text-danger small"></span>
+</div>

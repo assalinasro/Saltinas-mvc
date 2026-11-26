@@ -5,7 +5,7 @@
         <div class="foto-wrap">
             <img src="@Url.Content("~/" + Model.Imagen)" alt="@Model.Nombre" class="foto-producto" loading="lazy"
                  onerror="this.onerror=null;this.src='@Url.Content("~/img/placeholder.svg")';" />
-            <span class="etiqueta-categoria">@Model.Categoria</span>
+            <span class="etiqueta-categoria">@Model.Categoria?.Nombre</span>
         </div>
         <div class="cuerpo-producto">
             <h3 class="nombre-producto">@Model.Nombre</h3>

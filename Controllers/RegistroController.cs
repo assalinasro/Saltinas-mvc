@@ -20,10 +20,10 @@ public class RegistroController : Controller
         return View(new RegistroViewModel());
     }
 
-    // POST: /Registro  -> valida, procesa y guarda la información
+    // POST: /Registro  -> valida, procesa y guarda la información en SQL Server
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Index(RegistroViewModel modelo)
+    public async Task<IActionResult> Index(RegistroViewModel modelo)
     {
         // Reglas que no se pueden expresar solo con anotaciones
         if (!modelo.AceptaTerminos)
@@ -48,7 +48,7 @@ public class RegistroController : Controller
             }
         }
 
-        if (!string.IsNullOrWhiteSpace(modelo.Correo) && _clientes.ExisteCorreo(modelo.Correo))
+        if (!string.IsNullOrWhiteSpace(modelo.Correo) && await _clientes.ExisteCorreoAsync(modelo.Correo))
         {
             ModelState.AddModelError(nameof(modelo.Correo), "Este correo ya está registrado.");
         }
@@ -63,7 +63,7 @@ public class RegistroController : Controller
             return View(modelo);
         }
 
-        var cliente = _clientes.Registrar(modelo);
+        var cliente = await _clientes.RegistrarAsync(modelo);
 
         // Patrón Post-Redirect-Get: evita reenviar el formulario si se recarga la página
         TempData["Nombre"] = cliente.NombreCompleto;
