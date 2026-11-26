@@ -1,7 +1,7 @@
 namespace SaltinasMvc.Models;
 
 /// <summary>
-/// Entidad que representa a una clienta registrada en la comunidad Saltinas.
+/// Clienta registrada en la comunidad Saltinas (tabla Clientes).
 /// La contraseña nunca se guarda en texto plano: solo su hash.
 /// </summary>
 public class Cliente

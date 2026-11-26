@@ -4,6 +4,6 @@ namespace SaltinasMvc.Models;
 public class CatalogoViewModel
 {
     public string CategoriaActiva { get; set; } = "todas";
-    public IReadOnlyList<CategoriaItem> Categorias { get; set; } = new List<CategoriaItem>();
+    public IReadOnlyList<Categoria> Categorias { get; set; } = new List<Categoria>();
     public IReadOnlyList<Producto> Productos { get; set; } = new List<Producto>();
 }
